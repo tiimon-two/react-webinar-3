@@ -26,3 +26,24 @@ export function createElement(name, props = {}, ...children) {
 
   return element;
 }
+
+/**
+ * Считаем кол-во выделений и возвращаем нужное значение
+ * @param {*} count Счетчик кол-ва выделений объекта
+ * @returns  {String}
+ */
+export function setRightPlurative(count) {
+  let plurantive = 'раз';
+ 
+  // Если кол-во выделений оканчивается на 2,3 ил 4 - возвращаем подходящий плюратив 'раза' 
+  if (String(count).at(-1) == 2 || String(count).at(-1) == 3 || String(count).at(-1) == 4) {
+    plurantive = 'раза';
+  }
+
+  //Числа оканчивающиеся на 12,13,14 исключения - возращаем для них 'раз'
+  if (String(count).at(-2) == 1 && (String(count).at(-1) == 2 || String(count).at(-1) == 3 || String(count).at(-1) == 4)) {
+    plurantive = 'раз';
+  }
+
+  return (plurantive);
+}
