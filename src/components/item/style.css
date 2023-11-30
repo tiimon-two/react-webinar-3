@@ -2,6 +2,10 @@
   display: flex;
   justify-content: flex-start;
   transition: background-color 1s;
+  color: #000;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
 }
 
 .Item_selected {
@@ -18,8 +22,26 @@
   padding: 20px 10px;
 }
 
+.Item-price {
+  min-width: max-content;
+  padding: 20px 10px 20px 20px;
+  font-size: 18px;
+  color: #404040;
+}
+
+.Item-count {
+  min-width: max-content;
+  padding: 20px 10px 20px 20px;
+  font-size: 18px;
+  color: #404040;
+}
+
 .Item-actions {
   display: flex;
   justify-content: flex-end;
   padding: 20px 20px 20px 10px;
+}
+
+.Item-button {
+  font-size: 13px;
 }

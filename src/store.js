@@ -1,5 +1,3 @@
-import {generateCode} from "./utils";
-
 /**
  * Хранилище состояния приложения
  */
@@ -7,6 +5,10 @@ class Store {
   constructor(initState = {}) {
     this.state = initState;
     this.listeners = []; // Слушатели изменений состояния
+    this.setState({
+      ...this.state,
+      cart: []
+    })
   }
 
   /**
@@ -40,47 +42,47 @@ class Store {
     for (const listener of this.listeners) listener();
   }
 
-  /**
-   * Добавление новой записи
-   */
-  addItem() {
-    this.setState({
-      ...this.state,
-      list: [...this.state.list, {code: generateCode(), title: 'Новая запись'}]
-    })
-  };
+  addToCart(item) {
+    let notInCart = true;
 
-  /**
-   * Удаление записи по коду
-   * @param code
-   */
-  deleteItem(code) {
-    this.setState({
-      ...this.state,
-      // Новый список, в котором не будет удаляемой записи
-      list: this.state.list.filter(item => item.code !== code)
-    })
-  };
+    this.state.cart.map(itemInCart => {
+      if(itemInCart.title === item.title) {
+        notInCart = false;
+        item.count = itemInCart.count + 1;
+        this.setState({
+          ...this.state,
+          cart: this.state.cart.filter(itemInCart => itemInCart.code !== item.code),
+        })
+      }
+    });
 
-  /**
-   * Выделение записи по коду
-   * @param code
-   */
-  selectItem(code) {
-    this.setState({
-      ...this.state,
-      list: this.state.list.map(item => {
-        if (item.code === code) {
-          // Смена выделения и подсчёт
-          return {
-            ...item,
-            selected: !item.selected,
-            count: item.selected ? item.count : item.count + 1 || 1,
-          };
-        }
-        // Сброс выделения если выделена
-        return item.selected ? {...item, selected: false} : item;
+    if(notInCart) {
+      this.setState({
+        ...this.state,
+        cart: [...this.state.cart, {code: item.code, title: item.title, price: item.price, inCart: true, count: 1}],
+        count: this.state.count? this.state.count + 1 : 1,
+        total: this.state.total? this.state.total + item.price : item.price
       })
+    } else {
+      this.setState({
+        ...this.state,
+        cart: [...this.state.cart, {code: item.code, title: item.title, price: item.price, inCart: true, count: item.count}],
+        total: this.state.total + item.price
+      })
+    }
+  }
+
+  deleteFromCart(code) {
+    this.state.cart.map(item => {
+      if(item.code === code) {
+        let cost = item.price * item.count;
+        this.setState({
+          ...this.state,
+          total: this.state.total - cost,
+          cart: this.state.cart.filter(item => item.code !== code),
+          count: this.state.count - 1
+        })
+      }
     })
   }
 }
