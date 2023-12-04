@@ -10,14 +10,16 @@ function Controls({onShowBasket, count, total}) {
         one: 'товар',
         few: 'товара',
         many: 'товаров'
-      })} / ${total} ₽`)} {!count &&(`пусто`)}</b></p>
+      })} / ${new Intl.NumberFormat().format(total)} ₽`)} {!count &&(`пусто`)}</b></p>
       <button className='Controls-button' onClick={() => onShowBasket()}>Перейти</button>
     </div>
   )
 }
 
 Controls.propTypes = {
-  onShowBasket: PropTypes.func
+  onShowBasket: PropTypes.func,
+  count: PropTypes.number,
+  total: PropTypes.number
 };
 
 Controls.defaultProps = {

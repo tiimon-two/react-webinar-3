@@ -18,21 +18,13 @@ function Item(props) {
   }
 
   return (
-    <div className={cn()}
-         onClick={callbacks.onClick}>
+    <div className={cn()} onClick={callbacks.onClick}>
       <div className={cn('code')}>{props.item.code}</div>
-      <div className={cn('title')}>
-        {props.item.title}
-      </div>
-      <div className={cn('price')}>
-        {props.item.price} ₽
-      </div>
-      {props.item.inCart ?
-        <div className={cn('count')}>
-          {props.item.count} шт
-        </div> : ''}
+      <div className={cn('title')}>{props.item.title}</div>
+      <div className={cn('price')}>{new Intl.NumberFormat().format(props.item.price)} ₽</div>
+      {props.isInCart ? <div className={cn('count')}>{props.item.count} шт</div> : '' }
       <div className={cn('actions')}>
-        {props.item.inCart ?
+        {props.isInCart?
           <button className={cn('button')} onClick={callbacks.onDelete}>
             Удалить
           </button> :
@@ -48,13 +40,19 @@ function Item(props) {
 Item.propTypes = {
   item: PropTypes.shape({
     code: PropTypes.number,
-    title: PropTypes.string
+    title: PropTypes.string,
+    price: PropTypes.number,
+    count: PropTypes.number,
+    isInCart: PropTypes.bool
   }).isRequired,
-  onDelete: PropTypes.func
+  onDelete: PropTypes.func,
+  onAdd: PropTypes.func
 };
 
 Item.defaultProps = {
   onDelete: () => {
+  },
+  onAdd: () => {
   }
 }
 

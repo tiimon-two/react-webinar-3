@@ -4,6 +4,7 @@ import Controls from "./components/controls";
 import Head from "./components/head";
 import PageLayout from "./components/page-layout";
 import Cart from './components/cart';
+import Modal from './components/modal';
 
 /**
  * Приложение
@@ -13,7 +14,6 @@ import Cart from './components/cart';
 
 function App({store}) {
   const list = store.getState().list;
-  const cart = store.getState().cart;
   const count = store.getState().count;
   const total = store.getState().total;
   const [show, setShow] = useState(false);
@@ -29,15 +29,20 @@ function App({store}) {
 
   const changeModal = () => {
     setShow(!show);
+    console.log(show);
   }
 
   return (
-    <PageLayout>
-      <Head title='Магазин'/>
-      <Controls onShowBasket={changeModal} count={count} total={total}/>
-      <List list={list} onAdd={callbacks.addToCart} />
-      <Cart list={cart} onDelete={callbacks.deleteFromCart} isShow={show} closeModal={changeModal} amount={total} count={count}/>
-    </PageLayout>
+    <>
+      <PageLayout>
+        <Head title='Магазин'/>
+        <Controls onShowBasket={changeModal} count={count} total={total}/>
+        <List list={list} onAdd={callbacks.addToCart} />
+      </PageLayout>
+      <Modal isShow={show}>
+        <Cart list={list} onDelete={callbacks.deleteFromCart} isShow={show} closeModal={changeModal} amount={total} count={count}/>
+      </Modal>
+    </>
   );
 }
 
