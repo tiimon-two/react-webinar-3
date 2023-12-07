@@ -1,0 +1,23 @@
+.Pagination {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 21px;
+}
+
+.Pagination-button {
+  border: 0;
+  background-color: #ffffff;
+
+  &&:hover {
+    background-color: #E1E1E1;
+  }
+}
+
+.Pagination-button_active {
+  background-color: #0087E9;
+  color: #ffffff;
+}
+
+.Pagination-split {
+  color: #CCCCCC;
+}
