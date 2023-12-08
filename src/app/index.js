@@ -25,10 +25,6 @@ function App() {
   ])
 
   return (
-    // <>
-    //   <Main/>
-    //   {activeModal === 'basket' && <Basket/>}
-    // </>
     <RouterProvider router={router} />
   );
 }

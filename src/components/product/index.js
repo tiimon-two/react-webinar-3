@@ -3,7 +3,7 @@ import Basket from "../../app/basket";
 import useSelector from "../../store/use-selector";
 import useStore from "../../store/use-store";
 import BasketTool from "../basket-tool";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import './style.css';
 
 function Product() {
