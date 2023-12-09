@@ -5,13 +5,13 @@ import {numberFormat, plural} from "../../utils";
 import './style.css';
 import { Link } from "react-router-dom";
 
-function BasketTool({sum, amount, onOpen}) {
+function BasketTool({sum, amount, onOpen, lang}) {
   const cn = bem('BasketTool');
   return (
     <div className={cn()}>
-      <Link to={'/'} className={cn('link')}>Главная</Link>
+      <Link to={'/'} className={cn('link')}>{lang === 'ru' ? 'Главная' : 'Main'}</Link>
       <div className={cn('calculate')}>
-        <span className={cn('label')}>В корзине:</span>
+        <span className={cn('label')}>{lang === 'ru' ? 'В корзине:' : 'In Basket:'}</span>
         <span className={cn('total')}>
           {amount
             ? `${amount} ${plural(amount, {
@@ -19,10 +19,10 @@ function BasketTool({sum, amount, onOpen}) {
               few: 'товара',
               many: 'товаров'
             })} / ${numberFormat(sum)} ₽`
-            : `пусто`
+            : `${lang === 'ru' ? 'пусто' : 'empty'}`
           }
         </span>
-        <button onClick={onOpen}>Перейти</button>
+        <button onClick={onOpen}>{lang === 'ru' ? 'Перейти' : 'Follow'}</button>
       </div>
     </div>
   );

@@ -24,7 +24,8 @@ function Product() {
     country: state.catalog.country,
     category: state.catalog.category,
     year: state.catalog.year,
-    price: state.catalog.price
+    price: state.catalog.price,
+    lang: state.language.lang,
   }));
 
   const {id} = useParams();
@@ -38,7 +39,7 @@ function Product() {
       <div className='Product'>
         <div className='Product-head'>
           <h1 className='Product-title'>{select.title}</h1>
-          <BasketTool onOpen={callbacks.openModalBasket} amount={select.amount} sum={select.sum}/>
+          <BasketTool onOpen={callbacks.openModalBasket} amount={select.amount} sum={select.sum} lang={select.lang}/>
         </div>
         <div className='Product-content'>
           <p className='Product-description Product-field'>{select.description}</p>
@@ -47,7 +48,7 @@ function Product() {
           <p className='Product-year Product-field'>Год выпуска <b>{select.year}</b></p>
           <p className='Product-price Product-field'>Цена: {select.price} ₽</p>
         </div>
-        <button className='Product-button' onClick={callbacks.addToBasket}>Добавить</button>
+        <button className='Product-button' onClick={callbacks.addToBasket}>{select.lang === 'ru' ? 'Добавить' : 'Add'}</button>
       </div>
       {select.activeModal === 'basket' && <Basket/>}
     </>

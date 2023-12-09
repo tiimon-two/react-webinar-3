@@ -23,7 +23,8 @@ function Main() {
     sum: state.basket.sum,
     count: state.catalog.count,
     skip: state.catalog.activePage,
-    activeModal: state.modals.name
+    activeModal: state.modals.name,
+    lang: state.language.lang,
   }));
 
   useEffect(() => {
@@ -39,19 +40,24 @@ function Main() {
     changePage: useCallback((skip) => {
       store.actions.catalog.load(skip);
     }, [store]),
+    // Смена языка
+    changeLang: useCallback(() => {
+      store.actions.language.changeLang();
+    }, [store]),
   }
 
   const renders = {
     item: useCallback((item) => {
-      return <Item item={item} onAdd={callbacks.addToBasket}/>
+      return <Item item={item} onAdd={callbacks.addToBasket} lang={select.lang}/>
     }, [callbacks.addToBasket]),
   };
+
   return (
     <>
       <PageLayout>
-        <Head title='Магазин'/>
+        <Head title={select.lang === 'ru' ? 'Магазин' : 'Shop'} lang={select.lang} changeLang={callbacks.changeLang}/>
         <BasketTool onOpen={callbacks.openModalBasket} amount={select.amount}
-                    sum={select.sum}/>
+                    sum={select.sum} lang ={select.lang}/>
         <List list={select.list} renderItem={renders.item}/>
         <Pagination count={select.count} activePage={(select.skip)} changePage={callbacks.changePage}/>
       </PageLayout>
