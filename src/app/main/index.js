@@ -8,13 +8,16 @@ import useStore from "../../store/use-store";
 import useSelector from "../../store/use-selector";
 import Pagination from '../../components/pagination';
 import Basket from '../basket';
+import Container from '../../components/container';
+import Navigation from '../../components/navigation';
 
 function Main() {
 
   const store = useStore();
+  const productCount = 10;
 
   useEffect(() => {
-    store.actions.catalog.load(1);
+    store.actions.catalog.load(select.skip, productCount);
   }, []);
 
   const select = useSelector(state => ({
@@ -37,8 +40,8 @@ function Main() {
     // Открытие модалки корзины
     openModalBasket: useCallback(() => store.actions.modals.open('basket'), [store]),
     // Смена страницы товаров
-    changePage: useCallback((skip) => {
-      store.actions.catalog.load(skip);
+    changePage: useCallback((page, productCount) => {
+      store.actions.catalog.load(page, productCount);
     }, [store]),
     // Смена языка
     changeLang: useCallback(() => {
@@ -48,7 +51,7 @@ function Main() {
 
   const renders = {
     item: useCallback((item) => {
-      return <Item item={item} onAdd={callbacks.addToBasket} lang={select.lang}/>
+      return <Item item={item} onAdd={callbacks.addToBasket} lang={select.lang} link={'/components/product/'}/>
     }, [callbacks.addToBasket]),
   };
 
@@ -56,10 +59,12 @@ function Main() {
     <>
       <PageLayout>
         <Head title={select.lang === 'ru' ? 'Магазин' : 'Shop'} lang={select.lang} changeLang={callbacks.changeLang}/>
-        <BasketTool onOpen={callbacks.openModalBasket} amount={select.amount}
-                    sum={select.sum} lang ={select.lang}/>
+        <Container>
+          <Navigation lang={select.lang}/>
+          <BasketTool onOpen={callbacks.openModalBasket} amount={select.amount} sum={select.sum} lang ={select.lang}/>
+        </Container>
         <List list={select.list} renderItem={renders.item}/>
-        <Pagination count={select.count} activePage={(select.skip)} changePage={callbacks.changePage}/>
+        <Pagination pageCount={select.count} activePage={(select.skip)} changePage={callbacks.changePage} productCount={productCount}/>
       </PageLayout>
       {select.activeModal === 'basket' && <Basket/>}
     </>

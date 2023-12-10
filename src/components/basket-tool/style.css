@@ -2,17 +2,14 @@
 .BasketTool {
   display: flex;
   justify-content: space-between;
-  padding: 20px;
   font-size: 18px;
-}
-
-.BasketTool-link {
-  color: #0087E9;
-  text-decoration: none;
-  border-bottom: 2px solid #0087E9;
 }
 
 .BasketTool-total {
   font-weight: bold;
   margin: 0 20px;
+}
+
+.BasketTool-button {
+  cursor: pointer;
 }

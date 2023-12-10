@@ -3,7 +3,11 @@
   display: flex;
   justify-content: flex-start;
   transition: background-color 1s;
-  padding-left: 10px
+  padding-left: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  align-items: center;
 }
 
 .ItemBasket-code {
@@ -34,6 +38,10 @@
   color: #000000;
 
   &:hover {
-    border-bottom: 2px solid #000000;
+    text-decoration: underline #000000;
   }
+}
+
+.ItemBasket-remove {
+  cursor: pointer;
 }

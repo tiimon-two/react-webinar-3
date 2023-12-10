@@ -2,7 +2,7 @@ import Main from "./main";
 import useSelector from "../store/use-selector";
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import ErrorPage from './errorPage/errorPage';
-import Product from '../components/product';
+import Product from "./product";
 
 /**
  * Приложение
@@ -20,7 +20,8 @@ function App() {
     },
     {
       path: '/components/product/:id',
-      element: <Product/>
+      element: <Product/>,
+      errorElement: <ErrorPage/>
     }
   ])
 
