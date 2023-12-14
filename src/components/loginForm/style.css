@@ -1,0 +1,53 @@
+.Login {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 42px 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #000000;
+  background-color: #ffffff;
+}
+
+.Login-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 17px;
+}
+
+.Login-form {
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+}
+
+.Login-label {
+  margin-bottom: 19px;
+  background-color: #ffffff;
+}
+
+.Login-item {
+  padding: 0;
+  margin: 0;
+}
+
+input {
+  border: 1px solid #767676;
+}
+
+.Login-button {
+  width: 53px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  color: #000000;
+  font-size: 13px;
+}
+
+.Login-error {
+  margin: 0;
+  margin-bottom: 19px;
+  padding: 0;
+  color: #f00f00;
+}

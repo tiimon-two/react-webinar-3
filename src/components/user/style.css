@@ -1,0 +1,22 @@
+.User {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px 20px;
+  align-items: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.User-button {
+  color: #000000;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.User-link {
+  margin-right: 20px;
+  color: #0087E9;
+  text-decoration: underline #0087E9;
+}
