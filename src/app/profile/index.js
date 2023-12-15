@@ -4,7 +4,7 @@ import PageLayout from "../../components/page-layout";
 import Head from "../../components/head";
 import LocaleSelect from "../../containers/locale-select";
 import User from '../../components/user';
-import { memo, useCallback} from "react";
+import { memo, useCallback, useEffect} from "react";
 import useSelector from "../../hooks/use-selector";
 import ProfileContent from "../../components/profile-content";
 import useStore from "../../hooks/use-store";
@@ -30,17 +30,19 @@ function Profile() {
     waiting: state.login.waiting,
   }));
 
+  useEffect(() => {store.actions.login.findUser()}, [store]);
+
   return (
-    <Spinner active={select.waiting}>
       <PageLayout>
-        <User profileLink='/profile' user={select.authorized? select.user?.name : ''} loginLink='/login' authorized={select.authorized} logOut={callbacks.logOut}/>
+        <Spinner active={select.waiting}>
+          <User profileLink='/profile' user={select.user.name} loginLink='/login' authorized={select.authorized} logOut={callbacks.logOut}/>
+        </Spinner>
         <Head title={t('title')}>
           <LocaleSelect/>
         </Head>
         <Navigation/>
         <ProfileContent name={select.user?.name} phone={select.user?.phone} email={select.user?.email}/>
     </PageLayout>
-    </Spinner>
   );
 }
 

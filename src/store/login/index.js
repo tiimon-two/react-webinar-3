@@ -12,11 +12,12 @@ class LoginState extends StoreModule {
       token: localStorage.getItem('token'),
       error: '',
       user: {
-        name: localStorage.getItem('name'),
-        phone: localStorage.getItem('phone'),
-        email: localStorage.getItem('email'),
+        name: null,
+        phone: null,
+        email: null,
       },
       authorized: localStorage.getItem('token')? true : false,
+      login: false,
     }
   }
 
@@ -39,9 +40,6 @@ class LoginState extends StoreModule {
       const json = await response.json();
       try {
         localStorage.setItem('token', json.result.token);
-        localStorage.setItem('name', json.result.user.profile.name);
-        localStorage.setItem('phone', json.result.user.profile.phone);
-        localStorage.setItem('email', json.result.user.email);
         this.setState({
           ...this.getState(),
           token: json.result.token,
@@ -78,10 +76,49 @@ class LoginState extends StoreModule {
       localStorage.clear();
       this.setState({
         ...this.getState(),
-        token: '',
+        token: null,
         authorized: false,
         waiting: false,
       }, 'Удалён токен');
+    } else {
+      this.setState({
+        ...this.getState(),
+        waiting: false
+      })
+    }
+  }
+
+  async findUser() {
+    if(this.getState().authorized) {
+      this.setState({
+        ...this.getState(),
+        waiting: true,
+      })
+      const response = await fetch('api/v1/users/self?fields=*',{
+        method: 'GET',
+        headers: {
+          'X-Token': this.getState().token,
+        }
+      });
+        const json = await response.json();
+        if(!json.error && !this.getState().login) {
+          this.setState({
+            ...this.getState(),
+            user: {
+              name: json?.result?.profile?.name,
+              phone: json?.result?.profile?.phone,
+              email: json?.result?.email,
+            },
+            waiting: false,
+            login: true,
+          }, 'Загружены данные из токена');
+      } else {
+        console.log(json.error);
+        this.setState({
+          ...this.getState(),
+          waiting: false,
+        });
+      }
     }
   }
 }

@@ -1,4 +1,4 @@
-import {memo, useCallback, useMemo} from 'react';
+import {memo, useCallback, useEffect, useMemo} from 'react';
 import {useParams} from "react-router-dom";
 import useStore from "../../hooks/use-store";
 import useSelector from "../../hooks/use-selector";
@@ -28,6 +28,7 @@ function Article() {
   const select = useSelector(state => ({
     article: state.article.data,
     waiting: state.article.waiting,
+    waitingProfile: state.login.waiting,
     authorized: state.login.authorized,
     user: state.login.user,
   }));
@@ -40,9 +41,13 @@ function Article() {
     logOut: useCallback(() => store.actions.login.logOut(), [store]),
   }
 
+  useEffect(() => {store.actions.login.findUser()}, [store]);
+
   return (
     <PageLayout>
-      <User profileLink='/profile' user={select.authorized? select.user?.name : ''} loginLink='/login' authorized={select.authorized} logOut={callbacks.logOut}/>
+      <Spinner active={select.waitingProfile}>
+        <User profileLink='/profile' user={select.user.name} loginLink='/login' authorized={select.authorized} logOut={callbacks.logOut}/>
+      </Spinner>
       <Head title={select.article.title}>
         <LocaleSelect/>
       </Head>

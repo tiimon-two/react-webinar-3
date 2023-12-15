@@ -1,4 +1,4 @@
-import {memo, useCallback} from 'react';
+import {memo, useCallback, useEffect} from 'react';
 import useStore from "../../hooks/use-store";
 import useTranslate from "../../hooks/use-translate";
 import useInit from "../../hooks/use-init";
@@ -10,6 +10,7 @@ import CatalogList from "../../containers/catalog-list";
 import LocaleSelect from "../../containers/locale-select";
 import User from '../../components/user';
 import useSelector from '../../hooks/use-selector';
+import Spinner from '../../components/spinner';
 
 /**
  * Главная страница - первичная загрузка каталога
@@ -21,12 +22,13 @@ function Main() {
   const callbacks = {
     logOut: useCallback(() => {
       store.actions.login.logOut();
-    })
+    }, [store])
   }
 
   const select = useSelector(state => ({
     authorized: state.login.authorized,
-    user: state.login.user
+    user: state.login.user,
+    waiting: state.login.waiting,
   }))
 
   useInit(() => {
@@ -35,9 +37,13 @@ function Main() {
 
   const {t} = useTranslate();
 
+  useEffect(() => {store.actions.login.findUser()}, [store]);
+
   return (
     <PageLayout>
-      <User profileLink='/profile' user={select.authorized? select.user?.name : ''} loginLink='/login' authorized={select.authorized} logOut={callbacks.logOut}/>
+      <Spinner active={select.waiting}>
+        <User profileLink='/profile' user={select.user.name} loginLink='/login' authorized={select.authorized} logOut={callbacks.logOut}/>
+      </Spinner>
       <Head title={t('title')}>
         <LocaleSelect/>
       </Head>

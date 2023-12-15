@@ -6,7 +6,7 @@ import Head from "../../components/head";
 import LocaleSelect from "../../containers/locale-select";
 import User from '../../components/user';
 import LoginForm from '../../components/loginForm';
-import { memo, useCallback} from "react";
+import { memo, useCallback, useEffect} from "react";
 import useSelector from "../../hooks/use-selector";
 import Spinner from "../../components/spinner";
 
@@ -30,9 +30,13 @@ function Login() {
     waiting: state.login.waiting,
   }));
 
+  useEffect(() => {store.actions.login.findUser()}, [store]);
+
   return (
       <PageLayout>
+      <Spinner active={select.waiting}>
         <User profileLink='/profile' user={select.user.name} loginLink='/login' authorized={select.authorized} logOut={callbacks.logOut}/>
+      </Spinner>
         <Head title={t('title')}>
           <LocaleSelect/>
         </Head>
