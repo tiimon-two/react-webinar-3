@@ -38,7 +38,7 @@ function Login() {
         </Head>
         <Navigation/>
         <Spinner active={select.waiting}>
-          <LoginForm error={select.error}/>
+          {!select.authorized &&<LoginForm error={select.error}/>}
         </Spinner>
       </PageLayout>
   );
