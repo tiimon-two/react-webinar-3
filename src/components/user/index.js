@@ -9,7 +9,7 @@ function User(props) {
 
   const callbacks = {
     onClick: props.authorized? useCallback(() => {
-        props.logOut()
+        props.logOut();
       }) : useCallback(() => {
         navigate(props.loginLink);
       })

@@ -55,7 +55,7 @@ class LoginState extends StoreModule {
           this.setState({
             ...this.getState(),
             waiting: false,
-            error: json.error.message
+            error: json.error.data.issues[0].message,
           })
         }
   }
@@ -113,13 +113,19 @@ class LoginState extends StoreModule {
             login: true,
           }, 'Загружены данные из токена');
       } else {
-        console.log(json.error);
         this.setState({
           ...this.getState(),
           waiting: false,
         });
       }
     }
+  }
+
+  deleteErrorMessage() {
+    this.setState({
+      ...this.getState(),
+      error: '',
+    })
   }
 }
 

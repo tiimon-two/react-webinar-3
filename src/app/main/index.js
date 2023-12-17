@@ -37,8 +37,6 @@ function Main() {
 
   const {t} = useTranslate();
 
-  useEffect(() => {store.actions.login.findUser()}, [store]);
-
   return (
     <PageLayout>
       <Spinner active={select.waiting}>

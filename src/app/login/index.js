@@ -9,6 +9,7 @@ import LoginForm from '../../components/loginForm';
 import { memo, useCallback, useEffect} from "react";
 import useSelector from "../../hooks/use-selector";
 import Spinner from "../../components/spinner";
+import { useNavigate } from "react-router-dom";
 
 /**
  * Главная страница - первичная загрузка каталога
@@ -16,6 +17,7 @@ import Spinner from "../../components/spinner";
 function Login() {
   const store = useStore();
   const {t} = useTranslate();
+  const navigate = useNavigate();
 
   const callbacks = {
     logOut: useCallback(() => {
@@ -30,7 +32,7 @@ function Login() {
     waiting: state.login.waiting,
   }));
 
-  useEffect(() => {store.actions.login.findUser()}, [store]);
+  useEffect(()=> {select.authorized? navigate('/profile') : ''}, [select.authorized]);
 
   return (
       <PageLayout>
@@ -42,7 +44,7 @@ function Login() {
         </Head>
         <Navigation/>
         <Spinner active={select.waiting}>
-          {!select.authorized &&<LoginForm error={select.error}/>}
+          <LoginForm/>
         </Spinner>
       </PageLayout>
   );

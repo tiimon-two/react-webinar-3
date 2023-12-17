@@ -41,8 +41,6 @@ function Article() {
     logOut: useCallback(() => store.actions.login.logOut(), [store]),
   }
 
-  useEffect(() => {store.actions.login.findUser()}, [store]);
-
   return (
     <PageLayout>
       <Spinner active={select.waitingProfile}>
