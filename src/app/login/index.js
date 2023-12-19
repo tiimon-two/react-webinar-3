@@ -5,7 +5,7 @@ import PageLayout from "../../components/page-layout";
 import Head from "../../components/head";
 import LocaleSelect from "../../containers/locale-select";
 import User from '../../components/user';
-import LoginForm from '../../components/loginForm';
+import LoginForm from '../../components/login-form';
 import { memo, useCallback, useEffect} from "react";
 import useSelector from "../../hooks/use-selector";
 import Spinner from "../../components/spinner";
@@ -22,7 +22,8 @@ function Login() {
   const callbacks = {
     logOut: useCallback(() => {
       store.actions.login.logOut();
-    })
+    }),
+    logIn: useCallback((login, password) => store.actions.login.authorization(login, password), [store])
   }
 
   const select = useSelector(state => ({
@@ -44,7 +45,7 @@ function Login() {
         </Head>
         <Navigation/>
         <Spinner active={select.waiting}>
-          <LoginForm/>
+          <LoginForm onLogin={callbacks.logIn} error={select.error}/>
         </Spinner>
       </PageLayout>
   );

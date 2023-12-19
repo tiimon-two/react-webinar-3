@@ -1,25 +1,16 @@
 import './style.css';
-import useStore from '../../hooks/use-store';
-import { useCallback, useEffect } from 'react';
+import { useCallback} from 'react';
 import PropTypes from "prop-types";
-import useSelector from '../../hooks/use-selector';
-import select from '../select';
 
-function LoginForm() {
-
-  const store = useStore();
+function LoginForm({onLogin, error}) {
 
   const callbacks = {
     onLogin: useCallback((e) => {
         e.preventDefault();
-        store.actions.login.authorization(e.target.login.value, e.target.password.value);
+        onLogin(e.target.login.value, e.target.password.value);
         e.target.reset();
     }),
   }
-
-  const select = useSelector(state => ({
-    error: state.login.error,
-  }));
 
   return(
     <div className='Login'>
@@ -33,19 +24,13 @@ function LoginForm() {
         <p className='Login-item'>Пароль</p>
           <input type='password' id='password' autoComplete='off'></input>
         </label>
-        {select.error &&
-          <p className='Login-error'>{select.error}</p>
+        {error &&
+          <p className='Login-error'>{error}</p>
         }
         <button className='Login-button' type='submit'>Войти</button>
       </form>
     </div>
   );
 }
-
-window.history.replaceState({}, select.error);
-
-LoginForm.propTypes = {
-  onLogin: PropTypes.func,
-};
 
 export default LoginForm;
