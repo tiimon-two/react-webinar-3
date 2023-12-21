@@ -1,0 +1,26 @@
+.Comment-list {
+  display: flex;
+  flex-direction: column;
+  padding: 0 40px;
+  background-color: #ffffff;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #000000;
+}
+
+.Comment-list-count {
+  font-size: 24px;
+  margin-bottom: 30px;
+}
+
+.Comment-list-list {
+  margin: 0;
+  padding: 0;
+}
+
+.Comment-list-item {
+  margin: 0;
+  padding: 0;
+  padding-left: 30px;
+}

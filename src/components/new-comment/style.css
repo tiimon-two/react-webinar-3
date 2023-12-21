@@ -1,0 +1,49 @@
+.New-comment {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
+  padding: 0 40px 30px 0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #000000;
+  background-color: #ffffff;
+}
+
+.New-comment-title {
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.New-comment-text {
+  width: 100%;
+  min-height: 76px;
+  margin-bottom: 10px;
+
+  &::placeholder {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #000000;
+  }
+}
+
+.New-comment-warning {
+  padding: 0 40px 30px 40px;
+  font-size: 16px;
+}
+
+.New-comment-link {
+  color: #0087E9;
+}
+
+.New-comment-button {
+  width: 90px;
+  height: 21px;
+  margin-right: 10px;
+  box-sizing: border-box;
+  font-size: 13px;
+  color: #000000;
+  font-weight: 400;
+}

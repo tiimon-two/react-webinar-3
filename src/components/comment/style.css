@@ -1,0 +1,47 @@
+.Comment {
+  display: flex;
+  flex-direction: column;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #000000;
+  margin-bottom: 30px;
+}
+
+.Comment-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+  font-size: 12px;
+}
+
+.Comment-author {
+  margin-right: 10px;
+  font-weight: 700;
+}
+
+.Comment-time {
+  color: #666666;
+}
+
+.Comment-text {
+  margin-bottom: 10px;
+}
+
+.Comment_answer {
+  padding-left: 30px;
+}
+
+.Comment-button {
+  box-sizing: border-box;
+  width: min-content;
+  height: 14px;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #0087E9;
+  font-size: 12px;
+  font-weight: 400;
+  border: none;
+  background-color: #ffffff;
+}
