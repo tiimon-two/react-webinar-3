@@ -22,16 +22,18 @@ export default {
       }
     }
   },
+
   post: (text, parent) => {
     return async (dispatch, getState, services) => {
+      // установка признака ожидания отправки комментария
       dispatch({type: 'comments/post-start'});
 
       try {
         const body = {
           "text": text,
           "parent": {
-            "_id": parent,
-            "_type": 'article'
+            "_id": parent._id,
+            "_type": parent._type
           }
         }
         const res = await services.api.request({
@@ -39,13 +41,12 @@ export default {
           method: 'POST',
           body: JSON.stringify(body),
         });
+        // комментарий отправлен успешно
         dispatch({type: '/comments/post-success', payload: {data: res.data.result}});
-        console.log(res.data);
-        console.log(res.data.error);
 
       } catch (e) {
+        // ошибка
         dispatch({type: '/comments/post-error'});
-        console.log('error' + e);
       }
     }
   }

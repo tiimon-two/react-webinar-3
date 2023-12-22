@@ -1,14 +1,12 @@
-import { useDispatch} from "react-redux";
+import { shallowEqual, useDispatch, useSelector as useReduxSelector} from "react-redux";
 import CommentList from "../../components/comment-list";
-import NewComment from "../../components/new-comment";
 import Spinner from "../../components/spinner";
 import useInit from "../../hooks/use-init";
 import commentActions from '../../store-redux/comment/actions';
 import useSelector from '../../hooks/use-selector';
 import { useCallback } from "react";
 
-
-function Comments({id, commentList, waiting}) {
+function Comments({id}) {
   const dispatch = useDispatch();
 
   const select = useSelector(state => ({
@@ -16,13 +14,21 @@ function Comments({id, commentList, waiting}) {
     user: state.session.user,
   }));
 
+  // для состояния в redux завожу отдельную переменную
+  const reduxSelect = useReduxSelector(state => ({
+    comments: state.comment.data,
+    waiting: state.comment.waiting,
+    inAnswer: state.comment.inAnswer,
+  }), shallowEqual);
+
+  // загружаю комментарии для товара
   useInit(() => {
     dispatch(commentActions.load(id));
   }, [id]);
 
   const callbacks = {
     onPost: useCallback((text, parent) => {
-      dispatch(commentActions.post(text, id, parent))
+      dispatch(commentActions.post(text, parent))
       .then(() => {
         dispatch(commentActions.load(id));
       })
@@ -30,8 +36,8 @@ function Comments({id, commentList, waiting}) {
   }
 
   return(
-    <Spinner active={waiting}>
-      <CommentList commentList={commentList} onPost={callbacks.onPost} exists={select.exists} user={select.user} id={id}/>
+    <Spinner active={reduxSelect.waiting}>
+      <CommentList commentList={reduxSelect.comments} onPost={callbacks.onPost} exists={select.exists} user={select.user} id={id}/>
     </Spinner>
   );
 }

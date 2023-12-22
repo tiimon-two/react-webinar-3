@@ -21,11 +21,17 @@
   font-weight: 700;
 }
 
+.Comment-author_active {
+  color: #666666;
+}
+
 .Comment-time {
   color: #666666;
 }
 
 .Comment-text {
+  margin: 0;
+  padding: 0;
   margin-bottom: 10px;
 }
 

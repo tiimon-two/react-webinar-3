@@ -2,32 +2,32 @@ import { useCallback, useState } from 'react';
 import NewComment from '../new-comment';
 import './style.css';
 
-function Comment({author, time, text, onPost, exists,  hideBottomForm, id}) {
+function Comment({author, time, text, onPost, exists,  hideBottomForm, id, setActive, activeItem, lvl, parent, user}) {
   const [answer, setAnswer] = useState(false);
-  const [active, setActive] = useState(false);
 
   const callbacks = {
     setAnswer: useCallback(() => {
-      setActive(true);
+      setActive(id);
       setAnswer(true);
       hideBottomForm(false);
     }),
     onCancel: useCallback(() => {
-      setActive(false);
+      setActive(null);
       setAnswer(false);
       hideBottomForm(true);
     })
   }
 
   return(
-    <div className='Comment'>
+    // делаю отступ согласно вложенности элементов
+    <div className='Comment'style={{paddingLeft: `${lvl * 30}px`}}>
       <div className='Comment-header'>
-        <span className='Comment-author'>{author}</span>
+        <span className={author === user.profile.name ? 'Comment-author Comment-author_active' : 'Comment-author'}>{author}</span>
         <span className='Comment-time'>{time}</span>
       </div>
       <p className='Comment-text'>{text}</p>
       <button className='Comment-button' onClick={callbacks.setAnswer}>Ответить</button>
-      {(answer && active)? <NewComment author={author} id={id} active={active} answer={answer} onCancel={callbacks.onCancel} onPost={onPost} exists={exists}/> : ''}
+      {(answer && (activeItem === id))? <NewComment author={author} lvl={lvl} id={id} active={activeItem} answer={answer} onCancel={callbacks.onCancel} onPost={onPost} exists={exists} parent={parent}/> : ''}
     </div>
   );
 }

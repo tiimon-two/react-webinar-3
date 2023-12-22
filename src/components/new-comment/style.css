@@ -1,6 +1,7 @@
 .New-comment {
   display: flex;
   flex-direction: column;
+  margin-top: 30px;
   margin-bottom: 30px;
   padding: 0 40px 30px 0;
   font-family: Arial, Helvetica, sans-serif;
@@ -10,9 +11,16 @@
   background-color: #ffffff;
 }
 
+.New-comment_answer {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
 .New-comment-title {
   font-size: 12px;
   font-weight: 700;
+  margin: 0;
+  padding: 0;
   margin-bottom: 10px;
 }
 
