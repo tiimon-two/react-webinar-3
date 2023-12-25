@@ -38,6 +38,7 @@
 }
 
 .New-comment-warning {
+  margin-top: 30px;
   padding: 0 40px 30px 40px;
   font-size: 16px;
 }
@@ -54,4 +55,14 @@
   font-size: 13px;
   color: #000000;
   font-weight: 400;
+}
+
+.New-comment-button_notExist {
+  padding-left: 4px;
+  text-align: left;
+  border: none;
+  background-color: #ffffff;
+  color: #666666;
+  font-size: 16px;
+  text-decoration: underline solid #666666;
 }

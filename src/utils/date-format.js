@@ -7,5 +7,5 @@ export default function DateFormat(date) {
   } else {
     minutes = formanDate.getMinutes();
   }
-  return formanDate.getDay() + ' ' + months[formanDate.getMonth()] + ' ' + formanDate.getFullYear() + ' ' + ' в ' + formanDate.getHours() + ':' + minutes;
+  return formanDate.getUTCDate() + ' ' + months[formanDate.getMonth()] + ' ' + formanDate.getFullYear() + ' ' + ' в ' + formanDate.getHours() + ':' + minutes;
 }
