@@ -1,11 +1,13 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import './style.css';
 import { useState } from 'react';
+import { forwardRef } from 'react';
 
-function NewComment ({exists, onPost, onCancel, answer, parent, id, lvl}) {
+const NewComment = forwardRef(function NewComment ({exists, onPost, onCancel, answer, parent, id, lvl}, ref) {
   const [text, setText] = useState('');
   const gap = lvl >= 5 ? 0 : 30;
   let correctText = true;
+  const location = useLocation();
 
   if((text.length === 0) || (text.replace(/^\s+|\s+$/g, '').length == 0)) {
     correctText = false;
@@ -33,7 +35,7 @@ function NewComment ({exists, onPost, onCancel, answer, parent, id, lvl}) {
   return(
     // если пользователь авторизован вывожу форму иначе предлагаю авторизоваться
     (exists)?
-    <div className={answer? 'New-comment New-comment_answer' : 'New-comment'} style={{paddingLeft: `${answer? gap: 0}px`}}>
+    <div ref={ref} className={answer? 'New-comment New-comment_answer' : 'New-comment'} style={{paddingLeft: `${answer? gap: 0}px`}}>
       <form className='New-comment-form' onSubmit={correctText? callbacks.onPost : callbacks.warning}>
         <p className='New-comment-title'>Новый комментарий</p>
         <textarea className='New-comment-text' value={text} onChange={e => setText(e.target.value)}></textarea>
@@ -41,11 +43,11 @@ function NewComment ({exists, onPost, onCancel, answer, parent, id, lvl}) {
         {answer? <button className='New-comment-button' type='button' onClick={onCancel}>Отмена</button> : ''}
       </form>
     </div> :
-     <div  className='New-comment-warning'>
-      <Link to='/login' className='New-comment-link'>Войдите</Link>, чтобы иметь возможность комментировать.
+     <div ref={ref} className='New-comment-warning'>
+      <Link to='/login' className='New-comment-link' state={{back: location.pathname}}>Войдите</Link>, чтобы иметь возможность комментировать.
       {answer? <button className='New-comment-button New-comment-button_notExist' type='button' onClick={onCancel}>Отмена</button> : ''}
     </div>
   );
-}
+});
 
 export default NewComment;

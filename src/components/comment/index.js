@@ -22,9 +22,7 @@ function Comment({author, time, text, onPost, exists,  hideBottomForm, id, setAc
       setActive(id);
       setAnswer(true);
       hideBottomForm(false);
-      if(ref.current) {
-        ref.current.scrollIntoView({block: 'center'});
-      }
+      setTimeout(() => ref.current?.scrollIntoView({block: 'center'}), 100);
     }),
     onCancel: useCallback(() => {
       setActive(null);
@@ -46,9 +44,7 @@ function Comment({author, time, text, onPost, exists,  hideBottomForm, id, setAc
         parent={{_id: id, _type: 'comment'}} children={item.children} id={item._id} onPost={onPost} exists={exists} hideBottomForm={hideBottomForm} setActive={setActive} activeItem={activeItem} user={user} lvl={lvl + 1} child={true}/>)
         })
       }
-      <div ref={ref}>
-      {(answer && (activeItem === id))? <NewComment lvl={lvl} id={id} active={activeItem} answer={answer} onCancel={callbacks.onCancel} onPost={onPost} exists={exists} parent={parent}/> : ''}
-      </div>
+      {(answer && (activeItem === id))? <NewComment ref={ref} lvl={lvl} id={id} active={activeItem} answer={answer} onCancel={callbacks.onCancel} onPost={onPost} exists={exists} parent={parent}/> : ''}
     </div>
   );
 }
