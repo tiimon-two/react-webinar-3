@@ -9,20 +9,22 @@ function Comment({author, time, text, onPost, exists,  hideBottomForm, id, setAc
   const ref = useRef(null);
   const gap = 30;
 
-  const checkLvl = (lvl) => {
-    if (lvl < 5) {
+  const checkLvl = (lvl, child) => {
+    if ((lvl < 5) && (child)) {
       return gap;
     } else {
       return 0;
     }
   }
 
+  console.log(lvl);
+
   const callbacks = {
     setAnswer: useCallback(() => {
       setActive(id);
       setAnswer(true);
       hideBottomForm(false);
-      setTimeout(() => ref.current?.scrollIntoView({block: 'center'}), 100);
+      setTimeout(() => ref.current?.scrollIntoView({behavior: "smooth",  block: 'center'}), 100);
     }),
     onCancel: useCallback(() => {
       setActive(null);
@@ -32,7 +34,7 @@ function Comment({author, time, text, onPost, exists,  hideBottomForm, id, setAc
   }
 
   return(
-    <div className={child? 'Comment Comment_child' : "Comment"}style={{paddingLeft: `${checkLvl(lvl)}px`}}>
+    <div className={child? 'Comment Comment_child' : "Comment"}style={{paddingLeft: `${checkLvl(lvl, child)}px`}}>
       <div className='Comment-header'>
         <span className={author === user?.profile?.name ? 'Comment-author Comment-author_active' : 'Comment-author'}>{author}</span>
         <span className='Comment-time'>{time}</span>
